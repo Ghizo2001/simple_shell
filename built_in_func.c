@@ -19,7 +19,10 @@ int check_build_in_func(char *final_string, char *envp[])
 			switch (f + 1)
 			{
 				case 1:
-					chdir(final_string);
+					if (chdir(final_string) != 0)
+					{
+						perror("cd");
+					}
 					return (1);
 
 				case 2:
