@@ -8,6 +8,7 @@
 int check_build_in_func(char *final_string, char *envp[])
 {
 	char *array_buitin[] = {"cd", "exit", "env"};
+	char **env = envp;
 	int num_builtins = sizeof(array_buitin) / sizeof(array_buitin[0]);
 	int f = 0;
 
@@ -26,7 +27,12 @@ int check_build_in_func(char *final_string, char *envp[])
 					return (2);
 
 				case 3:
-					my_env(envp);
+					env = envp;
+					while (*env != NULL)
+					{
+						printf("%s\n", *env);
+						env++;
+					}
 					return (1);
 
 				default:
@@ -37,4 +43,3 @@ int check_build_in_func(char *final_string, char *envp[])
 	}
 	return (0);
 }
-

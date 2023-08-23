@@ -31,7 +31,6 @@ void handle_error(const char *message);
 
 int create_pipes(int pipefd[][2], int num_pipes);
 
-
 void free_commands(char *commands[], int num_commands);
 
 void execute_commands(char *commands[], int num_commands,
@@ -44,6 +43,8 @@ void wait_for_children(int num_commands);
 int run_shell(char *pipeline, char *envp[]);
 
 char *my_substr(char *sentence, char *word);
+
+void fork_execute_function(char **array_string, char *env[]);
 
 void fork_execute_function(char **array_string, char *env[]);
 
@@ -64,9 +65,8 @@ char *my_strcpy(char *to, char *from);
 int check_build_in_func(char *final_string, char *envp[]);
 
 char *my_strcat(const char *str1, const char *str2);
-
 #ifndef SHELL_H
-#define SHELL_H
+#define SELL_H
 
 int my_env(char *envp[]);
 
