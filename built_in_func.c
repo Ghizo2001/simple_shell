@@ -43,6 +43,14 @@ int check_build_in_func(char *final_string, char *envp[])
 	}
 	return (0);
 }
+/**
+ * my_strcmp - Compare two strings.
+ * @str1: First string to compare.
+ * @str2: Second string to compare.
+ * Return: Negative value if str1 is less than str2,
+ * Positive value if str1 is greater than str2,
+ * 0 if str1 is equal to str2.
+ */
 int my_strcmp(const char *str1, const char *str2)
 {
 	while (*str1 && (*str1 == *str2))
@@ -50,5 +58,5 @@ int my_strcmp(const char *str1, const char *str2)
 		str1++;
 		str2++;
 	}
-	return *(unsigned char *)str1 - *(unsigned char *)str2;
+	return (*(unsigned char *)str1 - *(unsigned char *)str2);
 }
