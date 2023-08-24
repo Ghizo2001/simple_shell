@@ -1,5 +1,6 @@
+#include "libs.h"
 /**
- * exit_status - Manages the exit status for a given action
+ * exit_status - Manages the exit status for a given action and new status
  * @action: The action to perform (1 for set, 0 for get)
  * @new_status: The new status to set
  * Return: The current exit status if action is 0,
