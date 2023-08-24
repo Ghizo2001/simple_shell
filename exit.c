@@ -1,4 +1,3 @@
-#include "libs.h"
 /**
  * exit_status - Manages the exit status for a given action
  * @action: The action to perform (1 for set, 0 for get)
