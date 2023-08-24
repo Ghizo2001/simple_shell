@@ -1,74 +1,86 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include <sys/stat.h>
-#include <limits.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <dirent.h>
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#define PATH_FOUND 1
-#define PATH_NOT_FOUND 0
+#include <sys/stat.h>
+#include <stdbool.h>
+#include <signal.h>
 
-int main(void);
+#define PROMPT "$ "
+#define SHELL_NAME "./hsh"
 
-int handle_command(char *command, char *envp[]);
+static int err_count __attribute__((unused));
+extern char **environ;
 
-void handle_input(char *input, char *envp[]);
+/**
+ * struct built_in - built_in struct
+ * @name: built in function name
+ * @func: function associated
+ */
+typedef struct built_in
+{
+	char *name;
+	int (*func)(char **, char *);
+} built_in_t;
 
-#define PIPELINE_MAX_COMMANDS 2
-#define MAX_COMMANDS 10
-char **parse_pipeline_commands(char *pipeline, int *num_commands);
+/** parsing */
+char **parsing(char *input, char *delimiter);
 
-int my_pipline_handler(char *pipeline, char *envp[]);
+/** strings */
+int _putchar(char c, int buffer);
+void _puts(char *s, int buffer);
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+char *_strdup(char *s);
+int _strncmp(const char *s1, const char *s2, size_t n);
+int _strcmp(const char *s1, const char *s2);
+char *string_concat(char *str1, char *str2, char ch);
+char *_getenv(char *name);
+int strdiff(char *str1, char *str2);
 
-void handle_error(const char *message);
+/** execution */
+void execute(char **, char **, char *, int *);
+char *handle_path(char *cmd);
+int (*get_built_in(char *name))(char **, char *input);
 
-int create_pipes(int pipefd[][2], int num_pipes);
+/** built in */
+int env_func(char **, char *);
+int exit_func(char **, char *);
+int setenv_func(char **, char *);
+int unset_func(char **, char *);
+int _cd(char **args, char *);
 
-void free_commands(char *commands[], int num_commands);
+/** helpers */
+int handle_builtin(char **tokens, char *input);
+void free_tokens(char **tokens);
+int check_blank(char *);
+int _setenv(char *name, char *value, int overwrite);
+int _unset(char *name);
+void handler_function(int i);
+/** helpers 2*/
+int _atoi(char *);
+void cd_home(char *);
+void set_old_pwd(char *);
+char *strenv(char *env, char *variable, char *value);
 
-void execute_commands(char *commands[], int num_commands,
-		int pipefd[][2], char *envp[]);
+/** _getline*/
+char *insertstring(char **dst, char *str);
+int check(char **buff, int n);
+ssize_t _getline(char **line, size_t *n, FILE *fp);
 
-void close_pipes(int pipefd[][2], int num_pipes);
+void print_int(int n);
+void print_error(char *shell_name, int errno, char *cmd);
 
-void wait_for_children(int num_commands);
+/** _strtok */
 
-int run_shell(char *pipeline, char *envp[]);
+char *_strtok(char *str, char *delim);
+char *get_next(char *str, char *delim);
+int char_in_delim(char c, char *delim);
 
-char *my_substr(char *sentence, char *word);
 
-void fork_execute_function(char **array_string, char *env[]);
-
-void fork_execute_function(char **array_string, char *env[]);
-
-int my_strcmp(const char *string1, const char *string2);
-
-char *my_dubler(char *str);
-
-int my_strlen(char *str);
-
-int path_check_function(char *final_string);
-
-char *file_check(char *final_string);
-
-ssize_t read_input(char **line_input, size_t *size_input);
-
-char *my_strcpy(char *to, char *from);
-
-int check_build_in_func(char *final_string, char *envp[]);
-
-char *my_strcat(const char *str1, const char *str2);
-#ifndef SHELL_H
-#define SELL_H
-
-int my_env(char *envp[]);
-
-#endif
 #endif
